@@ -59,7 +59,7 @@ variable min_tls_version {
 
 variable large_file_share_enabled {
   description = "Determines if large file share is enabled."
-  value       = false
+  default     = false
 }
 
 variable is_hns_enabled {

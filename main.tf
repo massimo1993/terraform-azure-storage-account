@@ -45,7 +45,7 @@ data http ip_address {
 
 data azurerm_subnet subnet {
   for_each = {
-    for key, value in var.subnet_whitelist : index => value
+    for key, value in var.subnet_whitelist : key => value
   }
 
   name                 = each.value.subnet
@@ -57,5 +57,5 @@ module naming {
   source  = "Azure/naming/azurerm"
   version = "0.1.0"
 
-  suffix = [ local.project ]
+  suffix = [local.project]
 }

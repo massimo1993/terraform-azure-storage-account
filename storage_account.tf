@@ -1,5 +1,5 @@
 locals {
-  env = title(substr(var.info.environment, 0, 1))
+  env = lower(substr(var.info.environment, 0, 1))
 
   name   = module.naming.storage_account.name
   length = module.naming.storage_account.max_length - 4
@@ -10,9 +10,8 @@ locals {
       replace(ip, "/32", "")
   ]
 
-  current_ip = [chomp(data.http.ip_address.body)]
-
-  ip_whitelist = merge(ip_addresses, current_ip)
+  current_ip   = [chomp(data.http.ip_address.body)]
+  ip_whitelist = concat(local.ip_addresses, local.current_ip)
 
   subnet_whitelist = [
     for subnet in data.azurerm_subnet.subnet : subnet.id
@@ -20,10 +19,6 @@ locals {
 }
 
 resource azurerm_storage_account storage_account {
-
-  # prefix   = stgemini
-  # env      = d
-  # sequence = 001
   name = format("%s%s%03d", local.prefix, local.env, var.info.sequence)
 
   resource_group_name = var.resource_group
