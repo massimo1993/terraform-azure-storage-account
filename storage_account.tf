@@ -3,6 +3,7 @@ locals {
 
   name   = module.naming.storage_account.name
   length = module.naming.storage_account.max_length - 4
+
   prefix = substr(local.name, 0, local.length)
 
   ip_addresses = [
@@ -28,11 +29,13 @@ resource azurerm_storage_account storage_account {
   account_tier             = var.account_tier
   account_replication_type = var.account_replication_type
 
-  access_tier     = var.access_tier        
-  min_tls_version = var.min_tls_version
+  access_tier               = var.access_tier
+  enable_https_traffic_only = var.https_traffic_only
+  min_tls_version           = var.min_tls_version
 
-  large_file_share_enabled = var.large_file_share_enabled
+  allow_blob_public_access = var.allow_public_access
   is_hns_enabled           = var.is_hns_enabled
+  large_file_share_enabled = var.large_file_share_enabled
 
   tags = local.tags
 }
@@ -54,4 +57,19 @@ resource azurerm_storage_container container {
   name                  = var.container_names[count.index]
   storage_account_name  = azurerm_storage_account.storage_account.name
   container_access_type = var.access_type
+}
+
+resource azurerm_storage_blob blob_storage {
+  for_each = fileset(var.files_path, "**")
+
+  name                   = each.value
+  storage_account_name   = module.storage_account.name
+  storage_container_name = local.storage_container
+
+  type = var.type
+  size = var.size
+
+  access_tier  = var.blob_access_tier
+  content_type = var.content_type
+  source       = "${var.files_path}/${each.value}"
 }
