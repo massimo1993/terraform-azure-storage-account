@@ -58,18 +58,3 @@ resource azurerm_storage_container container {
   storage_account_name  = azurerm_storage_account.storage_account.name
   container_access_type = var.access_type
 }
-
-resource azurerm_storage_blob blob_storage {
-  for_each = fileset(var.files_path, "**")
-
-  name                   = each.value
-  storage_account_name   = module.storage_account.name
-  storage_container_name = local.storage_container
-
-  type = var.type
-  size = var.size
-
-  access_tier  = var.blob_access_tier
-  content_type = var.content_type
-  source       = "${var.files_path}/${each.value}"
-}
