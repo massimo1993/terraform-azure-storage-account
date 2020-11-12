@@ -25,12 +25,12 @@ terraform {
 }
 
 locals {
-  project     = title(var.info.project)
-  environment = title(var.info.environment)
+  project     = lower(var.info.project)
+  environment = lower(var.info.environment)
 
   tags = merge(
     {
-      for key, value in var.tags : key => title(value)
+      for key, value in var.tags : lower(key) => lower(value)
     },
     {
       project     = local.project

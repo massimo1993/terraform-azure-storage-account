@@ -1,11 +1,4 @@
 locals {
-  env = lower(substr(var.info.environment, 0, 1))
-
-  name   = module.naming.storage_account.name
-  length = module.naming.storage_account.max_length - 4
-
-  prefix = substr(local.name, 0, local.length)
-
   ip_addresses = [
     for ip in var.ip_whitelist :
       replace(ip, "/32", "")
@@ -20,7 +13,14 @@ locals {
 }
 
 resource azurerm_storage_account storage_account {
-  name = format("%s%s%03d", local.prefix, local.env, var.info.sequence)
+  name = format("%s%s%03d",
+    substr(
+      module.naming.application_insights.name, 0,
+      module.naming.application_insights.max_length - 6
+    ),
+    substr(local.environment, 0, 3),
+    var.info.sequence
+  )
 
   resource_group_name = var.resource_group
   location            = var.region
