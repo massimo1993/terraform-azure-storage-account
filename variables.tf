@@ -66,7 +66,7 @@ variable https_traffic_only {
   type        = bool
   description = "Only accept requests from secure connections via HTTPS."
 
-  defaul = true
+  default = true
 }
 
 variable min_tls_version {
@@ -143,9 +143,14 @@ variable access_type {
   default = "private"
 }
 
-variable files_path {
-  type        = string
-  description = "Absolute path to the files to upload as blobs."
+variable file_mapping {
+  type = list(object({
+    path      = string
+    pattern   = string
+    container = string
+  }))
+
+  description = "List of objects that contains file mapping for uploading blobs."
 }
 
 variable type {

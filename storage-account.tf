@@ -15,8 +15,8 @@ locals {
 resource azurerm_storage_account storage_account {
   name = format("%s%s%03d",
     substr(
-      module.naming.application_insights.name, 0,
-      module.naming.application_insights.max_length - 6
+      module.naming.storage_account.name, 0,
+      module.naming.storage_account.max_length - 6
     ),
     substr(local.environment, 0, 3),
     var.info.sequence
