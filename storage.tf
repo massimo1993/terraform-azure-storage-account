@@ -26,3 +26,10 @@ resource azurerm_storage_blob blob_storage {
   content_type = var.content_type
   source       = "${each.value.path}/${each.value.filename}"
 }
+
+resource azurerm_storage_queue storage_queue {
+  count = var.queue_enabled ? 1 : 0
+  name  = var.queue_name
+
+  storage_account_name = azurerm_storage_account.storage_account.name
+}

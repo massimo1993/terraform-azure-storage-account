@@ -43,7 +43,7 @@ variable account_kind {
 
 variable account_tier {
   type        = string
-  description = "Defines the tier to use for the storage account"
+  description = "Defines the tier to use for the storage account."
 
   default = "Standard"
 }
@@ -151,6 +151,7 @@ variable file_mapping {
   }))
 
   description = "List of objects that contains file mapping for uploading blobs."
+  default     = []
 }
 
 variable type {
@@ -179,4 +180,18 @@ variable content_type {
   description = "The content type of the blob storage."
 
   default = "application/octet-stream"
+}
+
+variable queue_enabled {
+  type        = bool
+  description = "Determines if a queue should be created within the storage account."
+
+  default = false
+}
+
+variable queue_name {
+  type        = string
+  description = "Name of the queue to create."
+
+  default = "messages"
 }
