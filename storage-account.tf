@@ -50,11 +50,3 @@ resource azurerm_storage_account_network_rules network_rules {
   ip_rules                   = local.ip_whitelist
   virtual_network_subnet_ids = local.subnet_whitelist
 }
-
-resource azurerm_storage_container container {
-  count = length(var.container_names)
-
-  name                  = var.container_names[count.index]
-  storage_account_name  = azurerm_storage_account.storage_account.name
-  container_access_type = var.access_type
-}

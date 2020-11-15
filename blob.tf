@@ -25,11 +25,6 @@ resource azurerm_storage_blob blob_storage {
   access_tier  = var.blob_access_tier
   content_type = var.content_type
   source       = "${each.value.path}/${each.value.filename}"
-}
 
-resource azurerm_storage_queue storage_queue {
-  count = var.queue_enabled ? 1 : 0
-  name  = var.queue_name
-
-  storage_account_name = azurerm_storage_account.storage_account.name
+  depends_on = [azurerm_storage_container.container]
 }

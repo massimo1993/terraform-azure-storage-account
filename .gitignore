@@ -2,7 +2,7 @@
 .terraform/
 
 # Compiled state files.
-*.tfvars
+terraform.tfvars
 *.tfstate
 *.tfstate.backup
 *.tfstate.lock.info

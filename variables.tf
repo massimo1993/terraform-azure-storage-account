@@ -136,6 +136,27 @@ variable container_names {
   default = []
 }
 
+variable data_lake_filesystem_names {
+  type        = list(string)
+  description = "List of data lake filesystem names to provision."
+
+  default = []
+}
+
+variable queue_names {
+  type        = list(string)
+  description = "List of queue names to provision."
+
+  default = []
+}
+
+variable file_share_names {
+  type        = list(string)
+  description = "List of file share names to provision."
+
+  default = []
+}
+
 variable access_type {
   type        = string
   description = "The access level configured for the container."
@@ -151,6 +172,16 @@ variable file_mapping {
   }))
 
   description = "List of objects that contains file mapping for uploading blobs."
+  default     = []
+}
+
+variable directory_mapping {
+  type = list(object({
+    share     = string
+    directory = string
+  }))
+
+  description = "List of objects that contains directory mapping for file shares."
   default     = []
 }
 
@@ -182,16 +213,9 @@ variable content_type {
   default = "application/octet-stream"
 }
 
-variable queue_enabled {
-  type        = bool
-  description = "Determines if a queue should be created within the storage account."
+variable quota {
+  type        = number
+  description = "The maximum size of the share in gigabytes. For standard storage accounts, this must be greater than 0 and less than 5120 GB (5 TB). For premium storage accounts, this must be greater than 100 GB and less than 102400 GB (100 TB). Default is 5120."
 
-  default = false
-}
-
-variable queue_name {
-  type        = string
-  description = "Name of the queue to create."
-
-  default = "messages"
+  default = 10
 }
