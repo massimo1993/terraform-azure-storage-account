@@ -157,6 +157,13 @@ variable file_share_names {
   default = []
 }
 
+variable table_names {
+  type        = list(string)
+  description = "List of table names to provision."
+
+  default = []
+}
+
 variable access_type {
   type        = string
   description = "The access level configured for the container."
