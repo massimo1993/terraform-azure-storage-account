@@ -192,6 +192,18 @@ variable directory_mapping {
   default     = []
 }
 
+variable table_mapping {
+  type = list(object({
+    table         = string
+    partition_key = string
+    row_key       = string
+    file          = string
+  }))
+
+  description = "List of objects that contains table mapping for table storage."
+  default     = []
+}
+
 variable type {
   type        = string
   description = "The type of blob storage to create."
