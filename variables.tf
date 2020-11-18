@@ -113,7 +113,7 @@ variable bypass_list {
 
 variable ip_whitelist {
   type        = list(string)
-  description = "List of public IP or IP ranges in CIDR Format to allow."
+  description = "List of public IP or IP ranges in CIDR Format to allow. By default the IP address used to deploy will be whitelisted."
 
   default = []
 }
