@@ -12,7 +12,7 @@ locals {
 
 resource azurerm_storage_blob blob_storage {
   for_each = {
-    for index, map in local.file_mapping : index => map
+    for file in local.file_mapping : file.filename => file
   }
 
   name                   = each.value.filename

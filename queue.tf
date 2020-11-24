@@ -1,6 +1,6 @@
 resource azurerm_storage_queue storage_queue {
-  count = length(var.queue_names)
-  name  = var.queue_names[count.index]
+  for_each = toset(var.queue_names)
+  name     = each.value
 
   storage_account_name = azurerm_storage_account.storage_account.name
 }

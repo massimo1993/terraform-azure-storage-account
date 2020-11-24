@@ -12,15 +12,15 @@ locals {
 }
 
 resource azurerm_storage_table storage_table {
-  count = length(var.table_names)
-  name  = var.table_names[count.index]
+  for_each = toset(var.table_names)
+  name     = each.value
 
   storage_account_name = azurerm_storage_account.storage_account.name
 }
 
 resource azurerm_storage_table_entity table_entity {
   for_each = {
-    for index, map in local.table_mapping : index => map
+    for entity in local.table_mapping : "row-${entity.row_key}" => entity
   }
 
   storage_account_name = azurerm_storage_account.storage_account.name

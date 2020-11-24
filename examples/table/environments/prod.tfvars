@@ -18,6 +18,6 @@ table_mapping = [
     table         = "todo"
     partition_key = "userId"
     row_key       = "id"
-    file          = "todos.json"
+    file          = "dev/todos.json"
   }
 ]
