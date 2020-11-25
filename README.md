@@ -37,6 +37,7 @@ The examples folder consist of the following examples:
 - `queue`: example creating a storage account with a queue.
 - `table`: example creating a storage account with a table and uploading data
    from exported json into the table.
+- `subnet-whitelist`: example creating a storage account with subnet whitelist.
 
 # License
 
