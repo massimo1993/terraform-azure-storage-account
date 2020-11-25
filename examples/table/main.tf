@@ -11,7 +11,7 @@
 
 module resource_group {
   source  = "massimo1993/resource-group/azure"
-  version = "0.0.2"
+  version = "0.0.3"
 
   info = var.info
   tags = var.tags
@@ -21,7 +21,7 @@ module resource_group {
 
 module storage_account {
   source  = "massimo1993/storage-account/azure"
-  version = "0.0.2"
+  version = "0.0.3"
 
   info = var.info
   tags = var.tags

@@ -29,5 +29,6 @@ module storage_account {
   resource_group = module.resource_group.name
   region         = var.region
 
-  queue_names = var.queue_names
+  subnet_whitelist = var.subnet_whitelist
+  container_names  = var.container_names
 }

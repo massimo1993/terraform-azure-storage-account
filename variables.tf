@@ -31,7 +31,7 @@ variable resource_group {
 
 variable region {
   type        = string
-  description = "Region where all the storage account will be created."
+  description = "Region where the storage account will be created."
 }
 
 variable account_kind {
@@ -122,7 +122,7 @@ variable subnet_whitelist {
   type = list(object({
     resource_group  = string
     virtual_network = string
-    subnet          = string
+    subnet_name     = string
   }))
 
   description = "List of objects that contains information to look up a subnet. This is a whitelist of subnets to allow for the storage account."
