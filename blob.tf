@@ -19,11 +19,11 @@ resource azurerm_storage_blob blob_storage {
   storage_account_name   = azurerm_storage_account.storage_account.name
   storage_container_name = each.value.container
 
-  type = var.type
-  size = var.size
+  type = var.blob_type
+  size = var.blob_size
 
   access_tier  = var.blob_access_tier
-  content_type = var.content_type
+  content_type = var.blob_content_type
   source       = "${each.value.path}/${each.value.filename}"
 
   depends_on = [azurerm_storage_container.container]

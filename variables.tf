@@ -97,6 +97,13 @@ variable is_hns_enabled {
   default = false
 }
 
+variable network_rules_enabled {
+  type        = bool
+  description = "Determines if network rules should be enabled for the storage account."
+
+  default = true
+}
+
 variable default_action {
   type        = string
   description = "The default action for the firewall used by the storage account."
@@ -204,14 +211,14 @@ variable table_mapping {
   default     = []
 }
 
-variable type {
+variable blob_type {
   type        = string
   description = "The type of blob storage to create."
 
   default = "Block"
 }
 
-variable size {
+variable blob_size {
   type        = number
   description = "Used only for page blobs to specify the size in bytes of the blob to be created."
 
@@ -225,14 +232,14 @@ variable blob_access_tier {
   default = "Hot"
 }
 
-variable content_type {
+variable blob_content_type {
   type        = string
   description = "The content type of the blob storage."
 
   default = "application/octet-stream"
 }
 
-variable quota {
+variable file_share_quota {
   type        = number
   description = "The maximum size of the share in gigabytes. For standard storage accounts, this must be greater than 0 and less than 5120 GB (5 TB). For premium storage accounts, this must be greater than 100 GB and less than 102400 GB (100 TB). Default is 5120."
 

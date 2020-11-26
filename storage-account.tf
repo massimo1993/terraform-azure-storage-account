@@ -41,6 +41,8 @@ resource azurerm_storage_account storage_account {
 }
 
 resource azurerm_storage_account_network_rules network_rules {
+  count = var.network_rules_enabled ? 1 : 0
+
   resource_group_name  = var.resource_group
   storage_account_name = azurerm_storage_account.storage_account.name
 
