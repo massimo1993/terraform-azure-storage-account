@@ -9,6 +9,10 @@
 #
 # https://www.terraform.io/docs/providers/azurerm/index.html
 
+provider azurerm {
+  features {}
+}
+
 module resource_group {
   source  = "massimo1993/resource-group/azure"
   version = "0.0.3"
@@ -29,6 +33,6 @@ module storage_account {
   resource_group = module.resource_group.name
   region         = var.region
 
-  subnet_whitelist = var.subnet_whitelist
-  container_names  = var.container_names
+  network_rules   = var.network_rules
+  container_names = var.container_names
 }

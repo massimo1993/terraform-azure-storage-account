@@ -11,12 +11,19 @@ tags = {
 
 region = "South Central US"
 
-subnet_whitelist = [
-  {
-    resource_group  = "rgVnetP01"
-    virtual_network = "vnetP01"
-    subnet_name     = "snetP066"
+network_rules = {
+  allow-snet-prod-033 = {
+    default_action = "Deny"
+    bypass_list    = ["AzureServices"]
+
+    ip_rules = []
+
+    subnets = {
+      resource_group  = "rg-vnet-prod-001"
+      virtual_network = "vnet-prod-001"
+      subnet_name     = "snet-prod-033"
+    }
   }
-]
+}
 
 container_names = ["stocks", "covid"]
