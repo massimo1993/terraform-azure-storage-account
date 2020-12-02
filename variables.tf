@@ -97,43 +97,29 @@ variable is_hns_enabled {
   default = false
 }
 
-variable network_rules_enabled {
-  type        = bool
-  description = "Determines if network rules should be enabled for the storage account."
+variable network_rules {
+  type = map(object({
+    default_action = string
+    bypass_list    = list(string)
+    ip_rules       = list(string)
 
-  default = true
-}
-
-variable default_action {
-  type        = string
-  description = "The default action for the firewall used by the storage account."
-
-  default = "Deny"
-}
-
-variable bypass_list {
-  type        = list(string)
-  description = "Specifies whether traffic is bypassed for Logging/Metrics/AzureServices."
-
-  default = ["AzureServices"]
-}
-
-variable ip_whitelist {
-  type        = list(string)
-  description = "List of public IP or IP ranges in CIDR Format to allow. By default the IP address used to deploy will be whitelisted."
-
-  default = []
-}
-
-variable subnet_whitelist {
-  type = list(object({
-    resource_group  = string
-    virtual_network = string
-    subnet_name     = string
+    subnets = list(object({
+      resource_group  = string
+      virtual_network = string
+      subnet_name     = string
+    }))
   }))
 
-  description = "List of objects that contains information to look up a subnet. This is a whitelist of subnets to allow for the storage account."
-  default     = []
+  description = "Network rules to use for the storage account."
+
+  default = {
+    default-deny = {
+      default_action = "Deny"
+      bypass_list    = ["AzureServices"]
+      ip_rules       = []
+      subnets        = []
+    }
+  }
 }
 
 variable container_names {

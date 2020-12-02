@@ -9,10 +9,6 @@
 #
 # https://www.terraform.io/docs/providers/azurerm/index.html
 
-provider azurerm {
-  features {}
-}
-
 terraform {
   required_version = "~> 0.13.0"
 
@@ -42,6 +38,12 @@ locals {
       environment = local.environment
     }
   )
+
+  subnets = flatten([
+    for rule in var.network_rules : [
+      rule.subnets
+    ]
+  ])
 }
 
 data http ip_address {
@@ -50,7 +52,7 @@ data http ip_address {
 
 data azurerm_subnet subnet {
   for_each = {
-    for subnet in var.subnet_whitelist : subnet.subnet_name => subnet
+    for subnet in local.subnets : subnet.subnet_name => subnet
   }
 
   name                 = each.value.subnet_name

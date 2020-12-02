@@ -1,13 +1,16 @@
 locals {
-  ip_addresses = [
-    for ip in var.ip_whitelist :
-      replace(ip, "/32", "")
-  ]
+  ip_addresses = flatten([
+    for rule in var.network_rules : [
+      replace(rule.ip_rules, "/32", "")
+    ]
 
-  current_ip   = [chomp(data.http.ip_address.body)]
-  ip_whitelist = concat(local.ip_addresses, local.current_ip)
+    if length(rule.ip_rules) > 0
+  ])
 
-  subnet_whitelist = [
+  current_ip = [chomp(data.http.ip_address.body)]
+  ip_list    = concat(local.ip_addresses, local.current_ip)
+
+  subnet_list = [
     for subnet in data.azurerm_subnet.subnet : subnet.id
   ]
 }
@@ -41,14 +44,14 @@ resource azurerm_storage_account storage_account {
 }
 
 resource azurerm_storage_account_network_rules network_rules {
-  count = var.network_rules_enabled ? 1 : 0
+  for_each = var.network_rules
 
   resource_group_name  = var.resource_group
   storage_account_name = azurerm_storage_account.storage_account.name
 
-  default_action = var.default_action
-  bypass         = var.bypass_list
+  default_action = each.value.default_action
+  bypass         = each.value.bypass_list
 
-  ip_rules                   = local.ip_whitelist
-  virtual_network_subnet_ids = local.subnet_whitelist
+  ip_rules                   = local.ip_list
+  virtual_network_subnet_ids = local.subnet_list
 }
